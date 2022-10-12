@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 export default function BG() {
-
+ 
     useEffect(() => {
         (function (name, factory) {
             if (typeof window === "object") {

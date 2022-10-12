@@ -1,0 +1,368 @@
+@import "../../../utils/all.scss";
+
+@mixin itemStyle($bgc: white, $color: white) {
+  text-align: center;
+  background-color: $bgc;
+  color: $color;
+  border-top: 0.5px solid white;
+  border-left: 0.5px solid white;
+  border-radius: 4px;
+  @include flexBox(center, center);
+}
+@mixin commonTextStyle(
+  $bgc: rgb(231, 231, 231),
+  $color: black,
+  $size: 14px,
+  $spacing: 1px
+) {
+  text-align: center;
+  background-color: $bgc;
+  color: $color;
+  font-size: $size;
+  letter-spacing: $spacing;
+  @include flexBox(center, center);
+}
+
+// 上传文件确认弹框的大小
+#upload {
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  .ant-popover-inner-content {
+    width: 100%;
+    
+    .ant-btn {
+      width: 30%;
+      height: 100%;
+    }
+  }
+}
+
+// 删除弹窗样式
+.ant-popover-inner-content {
+  padding: 3px 10px;
+  width: 200px;
+  z-index: 2;
+  .ant-popover-buttons {
+    display: flex;
+    justify-content: space-around;
+    .ant-btn {
+      width: 45%;
+    }
+  }
+}
+
+.uploadShow {
+  background: none;
+  background-color: rgb(255, 255, 255);
+  width: calc(100vw);
+  height: calc(100vh);
+  @include flexBox();
+  flex-direction: column;
+  // 头部显示名称和控制退出登录
+  .header {
+    background-color: rgb(10, 10, 35);
+    width: 100%;
+    height: 4%;
+    @include flexBox();
+    .showName,
+    .Exit {
+      width: auto;
+      padding: 0px 12px;
+      height: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+      color: rgb(91, 202, 232);
+      letter-spacing: 2px;
+      @include flexBox(center, center);
+      a {
+        color: rgb(91, 202, 232);
+      }
+      .ant-btn-text {
+        letter-spacing: 2px;
+        color: rgb(91, 202, 232);
+      }
+    }
+  }
+  // 中间标题和控件层
+  .control {
+    width: 100%;
+    height: 18%;
+    @include flexBox();
+    flex-direction: column;
+    .title,
+    .controlElement {
+      width: 100%;
+      height: 50%;
+      background-color: rgb(255, 255, 255);
+      text-align: center;
+      line-height: 84.23px;
+    }
+    // 标题
+    .title {
+      letter-spacing: 3px;
+      font-size: 30px;
+      color: rgb(10, 10, 35);
+    }
+    // 控件
+    .controlElement {
+      @include flexBox();
+      .cle-left,
+      .cle-right {
+        width: 20%;
+        height: 100%;
+        margin-right: 30px;
+        margin-left: 30px;
+        @include flexBox(space-around, center);
+        // 左边upload button的样式
+        .ant-upload {
+          @include flexBox(space-around, center);
+          height: 100%;
+          width: 100%;
+        }
+        // 两边控件大小
+        .scan-import1,
+        .scan-import2 {
+          width: 45%;
+          height: 60%;
+          @include flexBox(space-around, center);
+          .cle-left-btn {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(10, 10, 35);
+            color: white;
+            border-radius: 5px;
+            border: 1px solid rgb(244, 244, 244);
+            transition: 0.8s;
+            letter-spacing: 2px;
+          }
+          .cle-left-btn:hover {
+            background-color: rgb(61, 173, 233);
+            border: 1px solid rgb(244, 244, 244);
+          }
+        }
+        .scan-import3 {
+          width: 80%;
+          height: 60%;
+          border-radius: 5px;
+          background-color: rgb(61, 173, 233);
+          border: 1px solid rgb(244, 244, 244);
+          font-size: 15px;
+        }
+      }
+      .cle-left {
+        width: 35%;
+      }
+    }
+  }
+  //   设置分割线样式
+  .ant-divider-horizontal {
+    margin: 0px;
+    background-color: rgb(203, 203, 203);
+    text-align: center;
+    height: 1.5px;
+  }
+  // 下面展示表格以及文件列表
+  .content {
+    background-color: rgb(253, 253, 253);
+    width: 100%;
+    height: 78%;
+    // box-shadow: 0px 0px 15px 10px rgba(210, 210, 210, 0.2) inset;
+    @include flexBox(flex-start, center);
+    // 左边表格
+    .content-left {
+      width: 80%;
+      height: 100%;
+      background-color: #fff;
+      border-right: 1px solid rgba(217, 217, 217, 0.4);
+      box-shadow: 0 0 0 10px 10px rgb(32, 32, 32);
+      @include flexBox(center, center);
+      // 主体表格样式
+      .content-table {
+        width: 95%;
+        height: 85%;
+        border: 1px solid rgba(246, 246, 246, 0.8);
+        @include flexBox();
+        flex-direction: column;
+        // 表格头部一行标签
+        .table-header {
+          width: 100%;
+          height: 5.9%;
+          @include flexBox();
+          .head-item {
+            width: 5.9%;
+            height: 100%;
+            @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+            border-radius: 2px;
+          }
+        }
+        // 表格文件内容样式
+        .table-content {
+          width: 100%;
+          height: 94.1%;
+          @include flexBox();
+          // 内容中左边一列下标
+          .tab-con-index {
+            width: 5.9%;
+            height: 100%;
+            @include flexBox();
+            flex-direction: column;
+            .tab-con-indexItem {
+              width: 100%;
+              height: 6.25%;
+              @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+              border-radius: 2px;
+            }
+          }
+          //中间表格item
+          .tab-con-content {
+            width: 94.1%;
+            height: 100%;
+            @include flexBox();
+            flex-direction: column;
+            .tab-row-item {
+              width: 100%;
+              height: 6.25%;
+              @include flexBox();
+              .row-item-col {
+                width: 6.25%;
+                height: 100%;
+                @include itemStyle(rgb(233, 233, 233), rgb(104, 104, 104));
+              }
+              .row-item-col::selection,
+              .row-item-col:focus {
+                color: rgb(8, 8, 8);
+                background-color: rgb(255, 225, 0);
+              }
+            }
+          }
+        }
+      }
+    }
+    // 右边文件列表
+    .content-right {
+      width: 20%;
+      height: 100%;
+      background-color: #fff;
+      @include flexBox(center, center);
+      .ctn-right-center {
+        width: 90%;
+        height: 84%;
+        border-radius: 3px;
+        @include flexBox();
+        flex-direction: column;
+        .list-top,
+        .list-bottom {
+          width: 100%;
+          height: 10%;
+          background-color: rgb(213, 183, 183);
+          @include commonTextStyle(
+            rgb(21, 21, 59),
+            rgb(85, 221, 212),
+            19px,
+            2px
+          );
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+        }
+        .list-top {
+          font-family: "Courier New", Courier, monospace;
+          letter-spacing: 0;
+        }
+        // 中间展示已经上传的数据
+        .list-show {
+          width: 100%;
+          height: 80%;
+          @include flexBox();
+          flex-direction: column;
+          .list-item {
+            padding: 0;
+            @include flexBox();
+            flex-direction: column;
+            // 文件名字
+            .fileName {
+              width: 100%;
+              height: 50%;
+              @include flexBox(center, center);
+              font-size: 14px;
+              .Span {
+                width: 80%;
+                overflow: hidden;
+                white-space: nowrap; /*禁止换行*/
+                text-overflow: ellipsis; /*文本超出隐藏*/
+                color: rgb(110, 110, 110);
+                font-size: 14px;
+              }
+              .Span:hover {
+                color: black;
+              }
+            }
+            // 三个按钮
+            .file-btn {
+              width: 100%;
+              height: 50%;
+              @include flexBox(center, center);
+              .showData,
+              .delete,
+              .showRes {
+                width: 33.3%;
+                height: 50%;
+                @include flexBox(center, center);
+                .ant-btn > span {
+                  color: rgb(84, 188, 146);
+                  font-size: 13px;
+                }
+              }
+              .showRes {
+                a {
+                  color: rgb(91, 202, 232);
+                }
+              }
+              .delete {
+                .ant-btn > span {
+                  color: rgb(226, 123, 78);
+                }
+                .ant-btn:focus-visible {
+                  background-color: rgb(195, 138, 138);
+                }
+              }
+            }
+          }
+          // 展示文件名和删列的样式
+          .ant-spin-nested-loading {
+            width: 100%;
+            height: 85%;
+            .ant-spin-container {
+              width: 100%;
+              height: 100%;
+              @include flexBox(center, center);
+              .ant-list-items {
+                width: 100%;
+                height: 100%;
+                li {
+                  width: 100%;
+                  height: 20%;
+                }
+              }
+            }
+          }
+          // 下面分页的样式
+          .ant-list-pagination {
+            margin: 0;
+            width: 100%;
+            height: 15%;
+            @include flexBox(center, center);
+          }
+        }
+        .list-bottom {
+          height: 12%;
+          border-radius: 0;
+          padding: 5px;
+          @include commonTextStyle(rgb(21, 21, 59), rgb(105, 214, 207), 13px);
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+      }
+    }
+  }
+}

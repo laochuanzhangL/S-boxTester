@@ -1,0 +1,124 @@
+@import "../../../utils/all.scss";
+
+@mixin itemStyle($bgc: white, $color: white) {
+  text-align: center;
+  background-color: $bgc;
+  color: $color;
+  border-top: 0.5px solid white;
+  border-left: 0.5px solid white;
+  border-radius: 4px;
+  @include flexBox(center, center);
+}
+@mixin commonTextStyle(
+  $bgc: rgb(231, 231, 231),
+  $color: black,
+  $size: 14px,
+  $spacing: 1px
+) {
+  text-align: center;
+  background-color: $bgc;
+  color: $color;
+  font-size: $size;
+  letter-spacing: $spacing;
+  @include flexBox(center, center);
+}
+
+.calPage {
+  background: none;
+  background-color: rgb(255, 255, 255);
+  width: calc(100vw);
+  height: calc(100vh);
+  @include flexBox();
+  flex-direction: column;
+  // 头部显示名称和控制退出登录
+  .header {
+    background-color: rgb(10, 10, 35);
+    width: 100%;
+    height: 4%;
+    @include flexBox();
+    .showName,
+    .Exit {
+      width: auto;
+      padding: 0px 12px;
+      height: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+      color: rgb(91, 202, 232);
+      letter-spacing: 2px;
+      @include flexBox(center, center);
+      a {
+        color: rgb(91, 202, 232);
+      }
+      .ant-btn-text {
+        letter-spacing: 2px;
+        color: rgb(91, 202, 232);
+      }
+    }
+  }
+  // 中间标题和控件层
+  .control {
+    width: 100%;
+    height: 18%;
+    @include flexBox();
+    flex-direction: column;
+    .title,
+    .controlElement {
+      width: 100%;
+      height: 50%;
+      background-color: rgb(255, 255, 255);
+      text-align: center;
+      line-height: 84.23px;
+    }
+    // 标题
+    .title {
+      letter-spacing: 3px;
+      font-size: 30px;
+      color: rgb(10, 10, 35);
+    }
+    // 控件
+    .controlElement {
+      @include flexBox();
+      .cle-left,
+      .cle-right {
+        width: 19%;
+        height: 100%;
+        margin-right: 10px;
+        margin-left: 10px;
+        background-color: rgb(213, 184, 184);
+        @include flexBox(space-around, flex-end);
+      }
+      .cle-left {
+        width: 48%;
+        // 左边六个控件样式
+        .resBtn {
+          width: 15%;
+          height: 70%;
+          margin-bottom: 4px;
+          @include flexBox(center, center);
+          .btn {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid black;
+            border-radius: 3px;
+          }
+          .btn:focus {
+            color: rgb(19, 18, 18);
+          }
+          .btn:hover {
+            border: rgb(178, 178, 178);
+            background-color: rgb(10, 10, 35);
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+  //   设置分割线样式
+  .ant-divider-horizontal {
+    margin: 0px;
+    background-color: rgb(203, 203, 203);
+    text-align: center;
+    height: 1.5px;
+  }
+}

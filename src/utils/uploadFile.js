@@ -3,15 +3,15 @@
   其中对错误进行了统一处理
 */
 import axios from 'axios'
-import { message } from 'antd'
+import { message } from 'antd' 
 
 // 给请求地址前加一个"/api"，在请求头中添加Token
 //设置请求携带cookie
 const instance = axios.create({
   headers: {
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'application/json',
   },
-  baseURL: '/RoutePlanSystem',
+  baseURL: '/api',
   withCredentials: true,
 })
 
@@ -21,13 +21,14 @@ instance.interceptors.response.use((res) => {
 })
 
 // 封装axios方法，并导出httpReq为新的请求工具
-export const uploadFile = (method, url, data, resType) => {
+export const UploadFile = (method, url, data) => {
   return new Promise((resolve, reject) => {
     instance({
       method: method,
       url: url,
       data: data,
-      responseType: resType,
+      // responseType: resType,
+      // params: {"lineChoosen": 1}
     }).then(
       (data) => {
         resolve(data)

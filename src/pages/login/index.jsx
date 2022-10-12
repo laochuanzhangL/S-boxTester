@@ -1,43 +1,45 @@
-import React from 'react'
-import BG from '../../utils/BG'
-import styles from './index.module.css'
-import { User, Register } from './components/index'
-import { Tabs } from 'antd'
+import React from "react";
+import BG from "../../utils/BG";
+import styles from "./index.module.css";
+import { User, Register, ServerLog } from "./components/index";
+import { Tabs } from "antd";
 
-const { TabPane } = Tabs
-
-export function Login() {
+export default function Login() {
   return (
     <div>
-      <div className={styles['login-wrap']}>
-        <div className={styles['login-top']}>物流优化</div>
+      <div className={styles["login-wrap"]}>
+        <div className={styles["login-top"]}>cipher calculate</div>
         <Tabs
-          className={styles['login-select-form']}
+          className={styles["login-select-form"]}
           defaultActiveKey="1"
           centered={true}
           tabBarGutter={80}
-        >
-          <TabPane
-            className={styles['login-select-form-content']}
-            tab="用户"
-            key="1"
-          >
-            <User />
-          </TabPane>
-
-          <TabPane
-            className={styles['login-select-form-content']}
-            tab="注册"
-            key="2"
-          >
-            <Register />
-          </TabPane>
-        </Tabs>
-        <div className={styles['login-text']}>
+          items={[
+            {
+              label: `PasswordLog`,
+              key: "1",
+              children: <User />,
+              className: styles["login-select-form-content"],
+            },
+            {
+              label: `ServerLog`,
+              key: "2",
+              children: <ServerLog />,
+              className: styles["login-select-form-content"],
+            },
+            {
+              label: `Register`,
+              key: "3",
+              children: <Register />,
+              className: styles["login-select-form-content"],
+            },
+          ]}
+        />
+        <div className={styles["login-text"]}>
           Copyright &copy; {new Date().getFullYear()} MISLab 版权所有
         </div>
+        <BG />
       </div>
-      <BG />
     </div>
-  )
+  );
 }
