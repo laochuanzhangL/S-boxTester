@@ -7,7 +7,6 @@ import {
 } from "@ant-design/icons";
 
 import httpUtill from "../../../utils/httpUtil";
-import axios from "axios";
 
 export const ServerLog = () => {
   const emailRef = useRef();

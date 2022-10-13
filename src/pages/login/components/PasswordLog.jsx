@@ -7,17 +7,13 @@ import cookies from "react-cookies";
 import httpUtill from "../../../utils/httpUtil";
 
 export const User = () => {
-  const [userMessage, setUserMessage] = useState({});
   const [status, setStatus] = useState(false);
 
   const onFinish = (values) => {
     httpUtill.passwordLog(values).then((res) => {
-      console.log(res);
-      console.log(res.data.token);
       if (res.msg === "邮箱或密码错误") {
         message.warn("Email or password error !");
       } else if (res.code === "200") {
-        setUserMessage(res.data);
         setStatus(true);
         const expires = new Date(
           new Date().getTime() + 60 * 60 * 1000 * 24 * 3

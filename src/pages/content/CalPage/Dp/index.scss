@@ -11,7 +11,7 @@
 }
 
 // 下面展示表格以及文件列表
-.content1 {
+.content2 {
   background-color: rgb(253, 253, 253);
   width: 100%;
   height: 78%;
@@ -24,68 +24,61 @@
     border-right: 1px solid rgba(217, 217, 217, 0.4);
     @include flexBox(center, center);
     // 主体表格样式
-    .table-border {
-      width: 85%;
-      height: 80%;
-      border-radius: 4px;
-      border: 1px solid rgb(176, 176, 176);
-      @include flexBox(center, center);
-      .content-table {
-        width: 92%;
-        height: 85%;
-        // background-color: rgb(205, 170, 170);
+    .content-table {
+      width: 95%;
+      height: 85%;
+      border: 1px solid rgba(246, 246, 246, 0.8);
+      @include flexBox();
+      flex-direction: column;
+      // 表格头部一行标签
+      .table-header {
+        width: 100%;
+        height: 5.9%;
         @include flexBox();
-        flex-direction: column;
-        // 表格头部一行小方块
-        .headerIndex {
-          width: 100%;
-          height: 11.1%;
+        .head-item {
+          width: 5.9%;
+          height: 100%;
+          @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+          border-radius: 2px;
+        }
+      }
+      // 表格文件内容样式
+      .table-content {
+        width: 100%;
+        height: 94.1%;
+        @include flexBox();
+        // 内容中左边一列下标
+        .tab-con-index {
+          width: 5.9%;
+          height: 100%;
           @include flexBox();
-          .headerItem {
-            width: 11.1%;
-            height: 100%;
-            border-radius: 1px;
+          flex-direction: column;
+          .tab-con-indexItem {
+            width: 100%;
+            height: 6.25%;
             @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+            border-radius: 2px;
           }
         }
-
-        .tbl-cnt {
-          width: 100%;
-          height: 89.9%;
+        //中间表格item
+        .tab-con-content {
+          width: 94.1%;
+          height: 100%;
           @include flexBox();
-          // 右边一列下标样式
-          .rightIndex {
-            width: 11.1%;
-            height: 100%;
+          flex-direction: column;
+          .tab-row-item {
+            width: 100%;
+            height: 6.25%;
             @include flexBox();
-            flex-direction: column;
-            .rightItem {
-              width: 100%;
-              height: 12.5%;
-              border-radius: 1px;
-              @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+            .row-item-col {
+              width: 6.25%;
+              height: 100%;
+              @include itemStyle(rgb(233, 233, 233), rgb(104, 104, 104));
             }
-          }
-          // 具体数据表格小方块
-          .detail {
-            width: 89.9%;
-            height: 100%;
-            .detailRow {
-              width: 100%;
-              height: 12.5%;
-              @include flexBox();
-              .detailItem {
-                width: 12.5%;
-                height: 100%;
-                border-radius: 3px;
-                @include flexBox();
-                @include itemStyle(rgb(238, 238, 238), rgb(121, 121, 121));
-              }
-              .detailItem::selection,
-              .detailItem:focus {
-                color: rgb(8, 8, 8);
-                background-color: rgb(255, 225, 0);
-              }
+            .row-item-col::selection,
+            .row-item-col:focus {
+              color: rgb(8, 8, 8);
+              background-color: rgb(255, 225, 0);
             }
           }
         }
@@ -99,11 +92,11 @@
     @include flexBox(center, center);
     .cnt-rgt-res {
       width: 80%;
-      height: 80%;
+      height: 85%;
       @include flexBox(center, flex-start);
       .cnt-rgt-res-center {
         width: 95%;
-        height: 89%;
+        height: 30%;
         background-color: rgba(246, 246, 246, 0.5);
         border: 1px solid rgb(228, 228, 228);
         border-radius: 5px;
@@ -111,7 +104,7 @@
         flex-direction: column;
         .head {
           width: 100%;
-          height: 13%;
+          height: 40%;
           background-color: rgb(21, 21, 59);
           border-top-left-radius: 3px;
           border-top-right-radius: 3px;
@@ -126,12 +119,12 @@
           flex-direction: column;
           .top {
             width: 100%;
-            height: 60%;
+            height: 80%;
             @include flexBox(space-around, center);
             flex-direction: column;
             .val-item {
               width: 90%;
-              height: 20%;
+              height: 43%;
               border: 1px solid rgb(239, 239, 239);
               background-color: #fff;
               @include flexBox(space-between, center);
@@ -153,25 +146,6 @@
                 color: rgb(7, 199, 199);
                 @include flexBox(flex-start, center);
               }
-            }
-          }
-          .download {
-            width: 100%;
-            height: 25%;
-            border-top: 1px solid rgb(239, 239, 239);
-            background-color: #fff;
-            @include flexBox(center, center);
-            .download-btn {
-              width: 80%;
-              height: 55%;
-              color: rgb(73, 202, 201);
-              background-color: rgb(21, 21, 59);
-              border-radius: 5px;
-            }
-            .download-btn:hover{
-              color: black;
-              background-color: #fff;
-              border: 1px solid black;
             }
           }
         }

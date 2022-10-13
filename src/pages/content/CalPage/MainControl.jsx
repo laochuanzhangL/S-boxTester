@@ -1,6 +1,12 @@
-import React, { useEffect, Fragment, useState } from "react";
-import { Link, Outlet, useLocation, useOutletContext } from "react-router-dom";
+import React, { Fragment, useState } from "react";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
 import { Divider, Button } from "antd";
+import cookies from "react-cookies";
 
 // 自己的组件
 import httpUtill from "../../../utils/httpUtil";
@@ -8,7 +14,6 @@ import "./index.scss";
 
 export default function UploadAndShow() {
   const [calData] = useState(useLocation().state);
-  // const [detail, setDetail] = useOutletContext()
   const btnData = [
     {
       path: "Bic",
@@ -36,14 +41,15 @@ export default function UploadAndShow() {
     },
   ];
 
-  useEffect(() => {
-    console.log(calData);
-  }, []);
-
   // 用于控制用户退出登录的函数
   const forExit = () => {
     httpUtill.checkLogout();
   };
+
+  // 判断是否登录
+  if (!cookies.load("token")) {
+    return <Navigate to="/Login" />;
+  }
 
   return (
     <Fragment>
@@ -82,11 +88,13 @@ export default function UploadAndShow() {
                 );
               })}
             </div>
-            <div className="cle-right"></div>
+            <div className="cle-right">
+              <Button className="rgt-back-button">Back to Calculate</Button>
+            </div>
           </div>
         </div>
         <Divider />
-        <Outlet context={calData}/>
+        <Outlet context={calData} />
       </div>
     </Fragment>
   );

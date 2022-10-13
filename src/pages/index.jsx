@@ -14,7 +14,7 @@ import {
   Lp,
   Nonlinearity,
   Sac,
-  Sac_of_bic,
+  SOB,
 } from "./content/CalPage/index.js";
 
 export default function Main() {
@@ -28,7 +28,7 @@ export default function Main() {
         <Route path="Lp" element={<Lp />} />
         <Route path="Nlr" element={<Nonlinearity />} />
         <Route path="Sac" element={<Sac />} />
-        <Route path="SOB" element={<Sac_of_bic />} />
+        <Route path="SOB" element={<SOB />} />
       </Route>
       {/* 上传文件 */}
       <Route path="/MainPage/Show/*" element={<Show />} />

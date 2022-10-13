@@ -6,18 +6,17 @@ import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import httpUtill from "../../../utils/httpUtil";
 
 export default function  FileList(props) {
-  const token = props.token;
   const setResarray = props.setResArray;
   const [fileData, setFileData] = useState(null);
   const [time, setTime] = useState(50);
 
   // 用于获取文件列表
   useEffect(() => {
-    httpUtill.getFileList(1, 5, token).then((res) => {
+    httpUtill.getFileList(1, 5).then((res) => {
         // console.log(res.data.records);
       setFileData(res.data.records);
     });
-    httpUtill.getRegisterStatus(token).then((res) => {
+    httpUtill.getRegisterStatus().then((res) => {
       setTime(res.data.times);
     });
   }, []);
@@ -60,12 +59,12 @@ export default function  FileList(props) {
                 </div>
                 <div className="delete">
                   <Popconfirm
-                    title="Are you sure？"
+                    title="Are you sure ?"
                     placement="left"
                     onConfirm={() => {
                       console.log(item.id);
                       httpUtill
-                        .deleteSingleFileData(item.id, token)
+                        .deleteSingleFileData(item.id)
                         .then((res) => {
                           console.log(res);
                           if (res.data) {

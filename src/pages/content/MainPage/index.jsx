@@ -1,8 +1,9 @@
 import React, { useEffect, Fragment, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Divider, Button, Upload, message, Popconfirm } from "antd";
 import { StarOutlined, UploadOutlined } from "@ant-design/icons";
+import cookies from "react-cookies"
 
 // 自己的组件
 import httpUtill from "../../../utils/httpUtil";
@@ -11,8 +12,7 @@ import Table from "./table";
 import FileList from "./fileList";
 
 export default function UploadAndShow() {
-  const [user, setUser] = useState(useLocation().state);
-  const [status, setStatus] = useState(true);
+  const [user, setUser] = useState(null);
   const [File, setFile] = useState(false);
   const [resArray, setResArray] = useState([]);
 
@@ -20,10 +20,8 @@ export default function UploadAndShow() {
   useEffect(() => {
     // 获取登录状态
     httpUtill.getRegisterStatus().then((res) => {
-      // console.log(res.data);
-      if (!res.data) {
-        // console.log("em?");
-        setStatus(false);
+      if (res.data) {
+        setUser(res.data);
       }
     });
   }, []);
@@ -54,15 +52,13 @@ export default function UploadAndShow() {
   };
   // 用于控制用户退出登录的函数
   const forExit = () => {
-    setUser(null)
     httpUtill.checkLogout();
   };
 
   // 如果未登录跳转至登录界面
-  // if (!status || !user) {
-  //   console.log(user);
-  //   // return <Navigate to="/" />;
-  // }
+  if (!cookies.load("token")) {
+    return <Navigate to="/Login" />;
+  }
 
   return (
     <Fragment>

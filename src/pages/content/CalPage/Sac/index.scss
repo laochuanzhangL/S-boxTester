@@ -11,7 +11,7 @@
 }
 
 // 下面展示表格以及文件列表
-.content1 {
+.content5 {
   background-color: rgb(253, 253, 253);
   width: 100%;
   height: 78%;
@@ -126,12 +126,12 @@
           flex-direction: column;
           .top {
             width: 100%;
-            height: 60%;
+            height: 80%;
             @include flexBox(space-around, center);
             flex-direction: column;
             .val-item {
               width: 90%;
-              height: 20%;
+              height: 16%;
               border: 1px solid rgb(239, 239, 239);
               background-color: #fff;
               @include flexBox(space-between, center);
@@ -153,25 +153,6 @@
                 color: rgb(7, 199, 199);
                 @include flexBox(flex-start, center);
               }
-            }
-          }
-          .download {
-            width: 100%;
-            height: 25%;
-            border-top: 1px solid rgb(239, 239, 239);
-            background-color: #fff;
-            @include flexBox(center, center);
-            .download-btn {
-              width: 80%;
-              height: 55%;
-              color: rgb(73, 202, 201);
-              background-color: rgb(21, 21, 59);
-              border-radius: 5px;
-            }
-            .download-btn:hover{
-              color: black;
-              background-color: #fff;
-              border: 1px solid black;
             }
           }
         }

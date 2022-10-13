@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 import DefArray from "../../../static/test.json";
-
+ 
 export default function Table(props) {
   const headerIndex = [
     "",

@@ -7,7 +7,6 @@ import { message } from 'antd'
 import cookies from "react-cookies"
 // 给请求地址前加一个"/api"，在请求头中添加Token
 //设置请求携带cookie
-const token = cookies.load("token")
 const instance = axios.create({
   baseURL: '/api',
   withCredentials: true
@@ -23,7 +22,7 @@ export const httpReq = (method, url, data, headerMsg) => {
       method: method,
       url: url,
       data: data,
-      headers: { headerMsg, "token": token }
+      headers: { "token": cookies.load("token") }
     }).then(
       (data) => {
         resolve(data)
@@ -40,7 +39,9 @@ export const httpReq = (method, url, data, headerMsg) => {
             message.error(`User are not login: ${errInfo}`)
             break
           case 401:
-            cookies.remove("token", { path: '/' })
+            if (cookies.load("token")) {
+              cookies.remove("token", { path: "/" })
+            }
             message.error(`You are not login, please login first~`)
             setTimeout(() => {
               window.location.href = '/'
