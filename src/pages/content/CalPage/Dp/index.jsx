@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Navigate, useOutletContext } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { message } from "antd";
 
 // 自己组件引入
@@ -7,26 +7,23 @@ import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
 
 export function Dp() {
-  const data = useOutletContext();
-  const [dp, setDp] = useState(null);
   const [dpStatus, setDpStatus] = useState(false);
   const DefArray = calDefaultData['Dp']
+  const dp = JSON.parse(sessionStorage.getItem("mainPage_fileData")).dp;
   const index = calDefaultData["DpIndex"];
   // 计算的一些结果数据
   let MaxVal = 0;
 
   useEffect(() => {
-    if (data === null) {
-      setDpStatus(true);
-    } else {
-      setDp(data.dp);
+    if(!dp){
+      setDpStatus(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 判断是否接收到了文件的数据
   if (dpStatus) {
-    message.error("没有获取到对应数据");
+    message.error("sorry, didn't get the Data !");
     return <Navigate to="/MainPage/Show" />;
   }
 
@@ -113,7 +110,7 @@ export function Dp() {
         <div className="content-right">
           <div className="cnt-rgt-res">
             <div className="cnt-rgt-res-center">
-              <div className="head">计算结果分析</div>
+              <div className="head">Analysis of Dp</div>
               <div className="value">
                 <div className="top">
                   {/* 结果分析计算的值 */}

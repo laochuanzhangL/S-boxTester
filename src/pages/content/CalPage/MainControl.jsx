@@ -1,10 +1,5 @@
 import React, { Fragment, useState } from "react";
-import {
-  Link,
-  Navigate,
-  Outlet,
-  useLocation,
-} from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { Divider, Button } from "antd";
 import cookies from "react-cookies";
 
@@ -89,7 +84,11 @@ export default function UploadAndShow() {
               })}
             </div>
             <div className="cle-right">
-              <Button className="rgt-back-button">Back to Calculate</Button>
+              <Link to="/MainPage/Show" className="rgt-back-button">
+                <Button block className="btn">
+                  Back to Calculate
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

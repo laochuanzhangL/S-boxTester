@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useOutletContext, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { message } from "antd";
 
 // 自己组件引入
@@ -7,8 +7,7 @@ import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
 
 export function SOB() {
-  const data = useOutletContext();
-  const [SOB, setSOB] = useState(null);
+  const SOB = JSON.parse(sessionStorage.getItem("mainPage_fileData")).sac_OF_BIC;
   const [SOBStatus, setSobStatus] = useState(false);
   const index = calDefaultData["B&SIndex"];
   // 计算的一些结果数据
@@ -17,17 +16,15 @@ export function SOB() {
   let Var = 0;
 
   useEffect(() => {
-    if (data === null) {
+    if (SOB === null) {
       setSobStatus(true);
-    } else {
-      setSOB(data.sac_OF_BIC);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 判断是否接收到了文件的数据
   if (SOBStatus) {
-    message.error("没有获取到对应数据");
+    message.error("sorry, didn't get the Data !");
     return <Navigate to="/MainPage/Show" />;
   }
 
@@ -39,7 +36,7 @@ export function SOB() {
       (SOB ? SOB : calDefaultData.Bic).forEach((item) => {
         calArray = [...calArray, ...item];
       });
-      MinVal = calArray[2];
+      MinVal = calArray[0];
       calArray.forEach((val) => {
         if (val === 0) {
           return;
@@ -54,7 +51,8 @@ export function SOB() {
         }
         Var = Var + Math.pow(val - AvgVal, 2);
       });
-      Var = Var / 56;
+      Var = Var / 55;
+      Var = Math.sqrt(Var)
       MinVal = MinVal.toFixed(6);
       AvgVal = AvgVal.toFixed(6);
       Var = Var.toFixed(6);
@@ -134,7 +132,7 @@ export function SOB() {
           <div className="cnt-rgt-res">
             {/* 调用这个函数计算最小值，平均值和方差 */}
             <div className="cnt-rgt-res-center">
-              <div className="head">计算结果分析</div>
+              <div className="head">Analysis of Sac_of_bic</div>
               <div className="value">
                 <div className="top">
                   <div className="val-item">

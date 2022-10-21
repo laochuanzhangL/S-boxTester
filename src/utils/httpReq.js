@@ -22,7 +22,7 @@ export const httpReq = (method, url, data, headerMsg) => {
       method: method,
       url: url,
       data: data,
-      headers: { "token": cookies.load("token") }
+      headers: { ...headerMsg, "token": cookies.load("token") }
     }).then(
       (data) => {
         resolve(data)
@@ -42,7 +42,8 @@ export const httpReq = (method, url, data, headerMsg) => {
             if (cookies.load("token")) {
               cookies.remove("token", { path: "/" })
             }
-            message.error(`You are not login, please login first~`)
+            sessionStorage.removeItem("mainPage_fileData")
+            message.success(`Welcome back next time ~`)
             setTimeout(() => {
               window.location.href = '/'
             }, 1000)
@@ -51,7 +52,7 @@ export const httpReq = (method, url, data, headerMsg) => {
             message.error(`Failed to find the resource: ${errInfo}`)
             break
           case 500:
-            message.warning(`服务器未能处理`)
+            message.warning(`The server failed to process the request !`)
             break
           default:
             message.error(`Wrong message: ${errInfo}`)

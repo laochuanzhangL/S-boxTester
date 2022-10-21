@@ -27,7 +27,7 @@
     .content-table {
       width: 90%;
       height: 80%;
-      border: 1px solid rgba(225, 225, 225, 0.8);
+      border: 1px solid rgb(176, 176, 176);
       overflow: auto;
       .table-box {
         width: 16000px;
@@ -42,7 +42,7 @@
           .head-item {
             width: 0.39%;
             height: 100%;
-            @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+            @include itemStyle(rgb(10, 10, 35), rgb(23, 204, 204));
             border-radius: 2px;
           }
         }
@@ -60,7 +60,7 @@
             .tab-con-indexItem {
               width: 100%;
               height: 0.39%;
-              @include itemStyle(rgb(44, 44, 66), rgb(247, 219, 5));
+              @include itemStyle(rgb(10, 10, 35), rgb(23, 204, 204));
               border-radius: 2px;
             }
           }
@@ -111,7 +111,7 @@
         .head {
           width: 100%;
           height: 35%;
-          background-color: rgb(21, 21, 59);
+          background-color: rgb(10, 10, 35);
           border-top-left-radius: 3px;
           border-top-right-radius: 3px;
           color: rgb(73, 202, 201);
@@ -141,7 +141,7 @@
                 .center {
                   width: 45%;
                   height: 45%;
-                  background-color: rgb(21, 21, 59);
+                  background-color: rgb(10, 10, 35);
                   border-radius: 4px;
                 }
               }

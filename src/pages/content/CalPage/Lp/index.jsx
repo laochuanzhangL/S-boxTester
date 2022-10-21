@@ -1,33 +1,30 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { Navigate, useOutletContext } from "react-router-dom";
+import React, { Fragment, useEffect, useState, Suspense, lazy } from "react";
+import { Navigate } from "react-router-dom";
 import { message } from "antd";
 
 // 自己组件引入
 import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
+const RowItem = lazy(() => import("./RowItem"));
 
 export function Lp() {
-  const data = useOutletContext();
-  const [lp, setLp] = useState(null);
+  const lp = JSON.parse(sessionStorage.getItem("mainPage_fileData")).lp;
   const [lpStatus, setLpStatus] = useState(false);
-  const DefArray = calDefaultData["Dp"];
   const index = calDefaultData["LpIndex"];
   // 计算的一些结果数据
   let MaxVal = 0;
+  let MaxCount = 0;
 
   useEffect(() => {
-    if (data === null) {
+    if (lp === null) {
       setLpStatus(true);
-    } else {
-      console.log(data);
-      setLp(data.lp);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 判断是否接收到了文件的数据
   if (lpStatus) {
-    message.error("没有获取到对应数据");
+    message.error("Sorry, didn't get the data !");
     return <Navigate to="/MainPage/Show" />;
   }
   // 接收到数据之后开始计算
@@ -42,6 +39,7 @@ export function Lp() {
       calArray.forEach((val) => {
         MaxVal = MaxVal < val ? val : MaxVal;
       });
+      MaxCount = Math.abs(MaxVal / 256.0 - 0.5);
     }
   }
 
@@ -69,29 +67,6 @@ export function Lp() {
       );
     });
   };
-  //   生成表格具体内容
-  const RowItemCol = ({ data }) => {
-    let key = 0;
-    return data.map((item) => {
-      key = key + 1;
-      return (
-        <div className="row-item-col" tabIndex={item} key={key}>
-          {item}
-        </div>
-      );
-    });
-  };
-  const RowItem = () => {
-    let key = 0;
-    return (lp ? lp : DefArray).map((item) => {
-      key = key + 1;
-      return (
-        <div className="tab-row-item" key={key}>
-          {<RowItemCol data={item} />}
-        </div>
-      );
-    });
-  };
 
   return (
     <Fragment>
@@ -100,12 +75,27 @@ export function Lp() {
         <div className="content-left">
           <div className="content-table">
             <div className="table-box">
-              <div className="table-header"><HeadItem /></div>
+              <div className="table-header">
+                <HeadItem />
+              </div>
               <div className="table-content">
-                <div className="tab-con-index">
-                  {<ContentIndexItem />}
+                <div className="tab-con-index">{<ContentIndexItem />}</div>
+                <div className="tab-con-content">
+                  <Suspense
+                    fallback={
+                      <h1
+                        style={{
+                          color: "rgb(23, 204, 204)",
+                          margin: "170px 500px",
+                        }}
+                      >
+                        Loding...
+                      </h1>
+                    }
+                  >
+                    {<RowItem lp={lp} />}
+                  </Suspense>
                 </div>
-                <div className="tab-con-content">{<RowItem />}</div>
               </div>
             </div>
           </div>
@@ -115,7 +105,7 @@ export function Lp() {
         <div className="content-right">
           <div className="cnt-rgt-res">
             <div className="cnt-rgt-res-center">
-              <div className="head">计算结果分析</div>
+              <div className="head">Analysis of Lp</div>
               <div className="value">
                 <div className="top">
                   {/* 结果分析计算的值 */}
@@ -123,13 +113,13 @@ export function Lp() {
                     <div className="fang">
                       <div className="center"></div>
                     </div>
-                    <div className="val">Max Value : {MaxVal}</div>
+                    <div className="val">Max Count : {MaxVal}</div>
                   </div>
                   <div className="val-item">
                     <div className="fang">
                       <div className="center"></div>
                     </div>
-                    <div className="val">Max Value : {MaxVal}</div>
+                    <div className="val">Max Value : {MaxCount}</div>
                   </div>
                 </div>
               </div>

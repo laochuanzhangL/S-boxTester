@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Divider, Button, Upload, message, Popconfirm } from "antd";
 import { StarOutlined, UploadOutlined } from "@ant-design/icons";
-import cookies from "react-cookies"
+import cookies from "react-cookies";
 
 // 自己的组件
 import httpUtill from "../../../utils/httpUtil";
@@ -15,6 +15,8 @@ export default function UploadAndShow() {
   const [user, setUser] = useState(null);
   const [File, setFile] = useState(false);
   const [resArray, setResArray] = useState([]);
+  const [time, setTime] = useState(50);
+  const [fileData, setFileData] = useState(null);
 
   // 用于判断是否登录
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function UploadAndShow() {
     httpUtill.getRegisterStatus().then((res) => {
       if (res.data) {
         setUser(res.data);
+        setTime(res.data.times);
       }
     });
   }, []);
@@ -30,26 +33,76 @@ export default function UploadAndShow() {
   const Props = {
     onChange({ file }) {
       if (file.status !== "uploading") {
-        message.success("success to uploade your file");
+        message.success("success to add your file");
         setFile(file.originFileObj);
       }
+      const formdata = new FormData();
+    formdata.append("file", File);
+      httpUtill.getFileArray(formdata).then((res) => {
+        setResArray(res.data);
+        // 用于更改上传计算次数
+        httpUtill.getRegisterStatus().then((res) => {
+          if (res.data) {
+            setTime(res.data.times);
+          }
+        });
+        const data = res.data;
+        message.loading("Start to get the calculate result, please wait a minute ~");
+        // 获取单次计算结果
+        httpUtill.getSingleRes({ data: data }).then((res) => {
+          const data = JSON.stringify(res.data)
+          sessionStorage.setItem("mainPage_fileData", data);
+          setFileData(res.data);
+          message.success("Successfully to get the calculate result ~");
+        });
+        setFile(null);
+      });
     },
   };
   // 用于上传文件
   const uploadFile = () => {
     if (!File) {
-      message.warn("Please add file first !");
+      message.warn("Please upload your file first !");
       return;
     }
-    message.success("start to get data array ~");
+    message.warn("Start to get the array of data and calculate result~");
     const formdata = new FormData();
     formdata.append("file", File);
     httpUtill.getFileArray(formdata).then((res) => {
-      console.log(res);
       setResArray(res.data);
-      message.success("get array successfully !");
+      // 用于更改上传计算次数
+      httpUtill.getRegisterStatus().then((res) => {
+        if (res.data) {
+          setTime(res.data.times);
+        }
+      });
+      const data = res.data;
+      message.loading("Start to get the calculate result, please wait a minute ~");
+      // 获取单次计算结果
+      httpUtill.getSingleRes({ data: data }).then((res) => {
+        const data = JSON.stringify(res.data)
+        sessionStorage.setItem("mainPage_fileData", data);
+        setFileData(res.data);
+        message.success("Successfully to get the calculate result ~");
+      });
+      setFile(null);
     });
   };
+  // 用于取消上传文件
+  const cancelUpload = () => {
+    setFile(null);
+  };
+
+  // 用于单次计算按钮
+  const Calculate = () => {
+    if (!fileData) {
+      message.warn(
+        "You currently do not have any files that can be calculated"
+      );
+      return;
+    }
+  };
+
   // 用于控制用户退出登录的函数
   const forExit = () => {
     httpUtill.checkLogout();
@@ -119,6 +172,7 @@ export default function UploadAndShow() {
                     "This will cost a chance to calculate, sure to calculate ?"
                   }
                   onConfirm={uploadFile}
+                  onCancel={cancelUpload}
                   okText="Yes"
                   cancelText="No"
                 >
@@ -129,9 +183,22 @@ export default function UploadAndShow() {
               </div>
             </div>
             <div className="cle-right">
-              <Button className="scan-import3" type="primary">
-                Check the real vent
-              </Button>
+              {fileData ? (
+                <Link
+                  to="/CalPage/Bic"
+                  className="scan-import3"
+                >
+                  <Button type="primary" className="btn" onClick={Calculate}>
+                    Get the result of this file
+                  </Button>
+                </Link>
+              ) : (
+                <Link className="scan-import3" state={fileData}>
+                  <Button type="primary" className="btn" onClick={Calculate}>
+                    Get the result of this file
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -142,7 +209,7 @@ export default function UploadAndShow() {
         <div className="content">
           <div className="content-left">{<Table data={resArray} />}</div>
           <div className="content-right">
-            {<FileList setResArray={setResArray} />}
+            {<FileList setResArray={setResArray} time={time} />}
           </div>
         </div>
       </div>

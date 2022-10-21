@@ -15,16 +15,17 @@ export const Register = () => {
   const onFinish = (values) => {
     setLoading(true);
     delete values.rePassword;
-    httpUtill.register(values).then((res) => {
-      console.log(res);
-      if (res.msg === "验证码不存在或已过期") {
-        message.error("The verification code does not exist or has expired !");
-      } else if (res.code === "200") {
-        message.success("register Successfully Go and log in ~");
-      } else {
-        message.error("There sames have something wrong with your message ~");
-      }
-    });
+    console.log(values);
+    // httpUtill.register(values).then((res) => {
+    //   console.log(res);
+    //   if (res.code === "0068000005") {
+    //     message.error("The verification code does not exist or has expired !");
+    //   } else if (res.code === "200") {
+    //     message.success("register Successfully Go and log in ~");
+    //   } else {
+    //     message.error("There sames have something wrong with your message ~");
+    //   }
+    // });
   };
 
   // 获取注册验证码
@@ -41,8 +42,8 @@ export const Register = () => {
         message.success("Send successfully !");
         return;
       }
-      if(res.msg === "该账号已存在"){
-        message.warn("The account already exists .")
+      if (res.msg === "该账号已存在") {
+        message.warn("The account already exists .");
       }
     });
   };
@@ -130,6 +131,19 @@ export const Register = () => {
             required: true,
             message: "Please enter your password!",
           },
+          () => ({
+            validator(_, value) {
+              const reg =  ""
+              if (true ) {
+                console.log(value);
+                console.log(reg.test(value));
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error("The two passwords you entered do not match!")
+              );
+            },
+          }),
         ]}
       >
         <Input
@@ -214,7 +228,7 @@ export const Register = () => {
           type="primary"
           htmlType="submit"
           style={{ width: "100%", marginTop: 10 }}
-          loading={loading}
+          // loading={loading}
         >
           Register
         </Button>

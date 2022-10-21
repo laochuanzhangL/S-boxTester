@@ -5,25 +5,26 @@ import {
   SafetyCertificateOutlined,
   FileMarkdownOutlined,
 } from "@ant-design/icons";
+import cookies from "react-cookies";
 
 import httpUtill from "../../../utils/httpUtil";
 
 export const ServerLog = () => {
   const emailRef = useRef();
   const [status, setStatus] = useState(false);
-  const [userMessage, setUserMessage] = useState({});
 
   //   按下发送请求登录
   const onFinish = (values) => {
-    // console.log(values);
     httpUtill.serverLog(values).then((res) => {
-      console.log(res);
       if (res.msg === "邮箱或密码错误") {
         message.warn("Email or password error !");
       } else if (res.code === "200") {
-        message.success("Login succeeded !");
-        setUserMessage(res.data);
+        const expires = new Date(
+          new Date().getTime() + 60 * 60 * 1000 * 24 * 3
+        );
+        cookies.save("token", res.data.token, { path: "/", expires });
         setStatus(true);
+        message.success("Login succeeded !");
       }
     });
   };
@@ -43,7 +44,7 @@ export const ServerLog = () => {
 
   //   判断是否登录成功，成功跳转到内部页面
   if (status) {
-    return <Navigate to="/MainPage/Show" state={userMessage} />;
+    return <Navigate to="/MainPage/Show" />;
   }
 
   return (

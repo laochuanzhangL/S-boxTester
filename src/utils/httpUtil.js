@@ -1,5 +1,4 @@
 import { httpReq } from "./httpReq";
-// import { UploadFile } from "./uploadFile"
 
 export default class httpUtill {
     // 获取登陆状态
@@ -16,6 +15,8 @@ export default class httpUtill {
     static register = (data) => httpReq('post', '/check/register', data, { 'Content-Type': 'application/json' })
     // 退出登录
     static checkLogout = () => httpReq('post', '/check/logout', '')
+    // 找回密码
+    static reSetPassword = (data) => httpReq('post', '/check/findPassword', data, { "Content-Type": "application/json" })
 
     // 计算部分
     // 上传文件获取数据
@@ -25,7 +26,7 @@ export default class httpUtill {
     // 获取上传过的文件列表
     static getFileList = (pageNum, pageSize) => httpReq('get', `/data/page?pageNum=${pageNum}&&pageSize=${pageSize}`, '')
     // 单次计算的数据返回
-    static getSingleRes = () => httpReq('post', "/single/caculate", '', { "Content-Type": "application/json" })
+    static getSingleRes = (data) => httpReq('post', "/single/calculate", data, { "Content-Type": "application/json" })
     // 删除已经上传为文件数据
-    static deleteSingleFileData = (id)=> httpReq('delete',  `/data/${id}`, '')
+    static deleteSingleFileData = (id) => httpReq('delete', `/data/${id}`, '')
 }

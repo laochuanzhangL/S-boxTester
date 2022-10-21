@@ -4,6 +4,7 @@ import { Form, Input, Button, message } from "antd";
 import { FileMarkdownOutlined, LockOutlined } from "@ant-design/icons";
 import cookies from "react-cookies";
 
+// 自己的组件
 import httpUtill from "../../../utils/httpUtil";
 
 export const User = () => {
@@ -14,11 +15,11 @@ export const User = () => {
       if (res.msg === "邮箱或密码错误") {
         message.warn("Email or password error !");
       } else if (res.code === "200") {
-        setStatus(true);
         const expires = new Date(
           new Date().getTime() + 60 * 60 * 1000 * 24 * 3
         );
         cookies.save("token", res.data.token, { path: "/", expires });
+        setStatus(true);
         message.success("Login succeeded !");
       }
     });
