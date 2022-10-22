@@ -11,18 +11,6 @@ export default function UploadAndShow() {
   const [calData] = useState(useLocation().state);
   const btnData = [
     {
-      path: "Bic",
-      name: "Bic",
-    },
-    {
-      path: "Dp",
-      name: "Dp",
-    },
-    {
-      path: "Lp",
-      name: "Lp",
-    },
-    {
       path: "Nlr",
       name: "Nonlinear",
     },
@@ -31,10 +19,24 @@ export default function UploadAndShow() {
       name: "Sac",
     },
     {
+      path: "Bic",
+      name: "Bic",
+    },
+    {
       path: "SOB",
       name: "SacOfBic",
     },
+
+    {
+      path: "Dp",
+      name: "Dp",
+    },
+    {
+      path: "Lp",
+      name: "Lp",
+    },
   ];
+  const url = useLocation();
 
   // 用于控制用户退出登录的函数
   const forExit = () => {
@@ -78,7 +80,11 @@ export default function UploadAndShow() {
                     className="resBtn"
                     key={item.path}
                   >
-                    <Button className="btn">{item.name}</Button>
+                    {url.pathname.indexOf(item.path) !== -1 ? (
+                      <Button className="btn btnClick">{item.name}</Button>
+                    ) : (
+                      <Button className="btn">{item.name}</Button>
+                    )}
                   </Link>
                 );
               })}

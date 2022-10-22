@@ -42,7 +42,6 @@ export function Lp() {
       MaxCount = Math.abs(MaxVal / 256.0 - 0.5);
     }
   }
-
   //   生成头部的小方块
   const HeadItem = () => {
     return index[0].map((item) => {
@@ -73,6 +72,7 @@ export function Lp() {
       <div className="content3">
         {/* 左边展示具体数据表格 */}
         <div className="content-left">
+          <div className="textExplain">1111zheg这个适用于展ffrfrf示LP页面的数据</div>
           <div className="content-table">
             <div className="table-box">
               <div className="table-header">

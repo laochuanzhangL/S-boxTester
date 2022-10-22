@@ -54,6 +54,9 @@ export const httpReq = (method, url, data, headerMsg) => {
           case 500:
             message.warning(`The server failed to process the request !`)
             break
+          case 504:
+            message.error("Request timeout, please request again")
+            break;
           default:
             message.error(`Wrong message: ${errInfo}`)
             break

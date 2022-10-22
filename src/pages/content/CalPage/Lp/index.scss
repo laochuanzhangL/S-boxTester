@@ -23,10 +23,28 @@
     background-color: rgb(255, 255, 255);
     border-right: 1px solid rgba(217, 217, 217, 0.4);
     @include flexBox(center, center);
+    flex-direction: column;
+    // 文字说明样式
+    .textExplain {
+      width: 90%;
+      min-height: 15%;
+      border-radius: 4px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-family: "Microsoft JhengHei";
+      color: rgb(22, 122, 149);
+      background-color: rgb(252, 252, 252);
+      border: 1px solid rgb(226, 226, 226);
+    }
+    .textExplain::selection {
+      color: black;
+      background-color: rgb(91, 202, 232);
+    }
     // 主体表格样式
     .content-table {
       width: 90%;
-      height: 80%;
+      height: 75%;
+      margin-top: 20px;
       border: 1px solid rgb(176, 176, 176);
       overflow: auto;
       .table-box {

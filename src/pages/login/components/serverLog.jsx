@@ -13,7 +13,7 @@ export const ServerLog = () => {
   const emailRef = useRef();
   const [status, setStatus] = useState(false);
 
-  //   按下发送请求登录
+  // 按下发送请求登录
   const onFinish = (values) => {
     httpUtill.serverLog(values).then((res) => {
       if (res.msg === "邮箱或密码错误") {
@@ -29,14 +29,17 @@ export const ServerLog = () => {
     });
   };
 
-  //   获取登录验证码
+  // 获取登录验证码
   const getEmailCode = () => {
     const email = emailRef.current.input.value;
     if (!email) {
       message.warning("Please enter your email first !");
     }
     httpUtill.getServerCodeLOG(email).then((res) => {
-      if (res.data === true) {
+      console.log(res);
+      if (res.code === "0068000005") {
+        message.error("This account does not exist, please register first !");
+      } else if (res.data === true) {
         message.success("Send successfully !");
       }
     });

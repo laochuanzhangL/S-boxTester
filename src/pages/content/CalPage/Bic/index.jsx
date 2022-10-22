@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Button, message } from "antd";
+import {message } from "antd";
 
 // 自己组件引入
 import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
-import { btnClickExport } from "../../../../utils/downLoadFile";
 
 export function Bic() {
   const bic = JSON.parse(sessionStorage.getItem("mainPage_fileData")).bic;
@@ -17,18 +16,16 @@ export function Bic() {
   let Var = 0;
 
   useEffect(() => {
-    if(!bic){
-      setBicStatus(true)
+    if (!bic) {
+      setBicStatus(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   // 判断是否接收到了文件的数据
   if (bicStatus) {
     message.error("sorry, didn't get the Data !");
     return <Navigate to="/MainPage/Show" />;
   }
-
   // 获取计算数值Min，Avg，Var
   if (bic) {
     let calArray = [];
@@ -57,7 +54,6 @@ export function Bic() {
       Var = Var.toFixed(6);
     }
   }
-
   // 头部小方块
   const HeaderItem = () => {
     return index[0].map((item) => {
@@ -68,7 +64,6 @@ export function Bic() {
       );
     });
   };
-
   // 右边index小方块
   const RightIndexItem = () => {
     return index[1].map((item) => {
@@ -79,7 +74,6 @@ export function Bic() {
       );
     });
   };
-
   // 获取具体小方块
   const DetailItemCol = (data) => {
     return data.data.map((item) => {
@@ -103,16 +97,12 @@ export function Bic() {
     });
   };
 
-  // 下载文件
-  const downFile = ()=>{
-    btnClickExport(JSON.parse(sessionStorage.getItem("mainPage_fileData")))
-  }
-
   return (
     <Fragment>
       <div className="content1">
         {/* 左边展示具体数据表格 */}
         <div className="content-left">
+          <div className="textExplain">1111zheg这个适用于展示Bic页面的数据</div>
           <div className="table-border">
             <div className="content-table">
               <div className="headerIndex">{<HeaderItem />}</div>
@@ -150,9 +140,6 @@ export function Bic() {
                     </div>
                     <div className="val">Variance : {Var}</div>
                   </div>
-                </div>
-                <div className="download">
-                  <Button className="download-btn" onClick={downFile}>Download</Button>
                 </div>
               </div>
             </div>

@@ -22,11 +22,11 @@ export default function Main() {
     <Routes>
       {/* 计算界面 */}
       <Route path="CalPage/*" element={<CalPage />}>
-        <Route path="" element={<Bic />} />
+        <Route path="" element={<Nonlinearity />} />
+        <Route path="Nlr" element={<Nonlinearity />} />
         <Route path="Bic" element={<Bic />} />
         <Route path="Dp" element={<Dp />} />
         <Route path="Lp" element={<Lp />} />
-        <Route path="Nlr" element={<Nonlinearity />} />
         <Route path="Sac" element={<Sac />} />
         <Route path="SOB" element={<SOB />} />
       </Route>

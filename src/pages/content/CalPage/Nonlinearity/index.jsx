@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { message } from "antd";
+import { message, Button } from "antd";
 
 // 自己组件引入
 import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
+import { btnClickExport } from "../../../../utils/downLoadFile";
 
 export function Nonlinearity() {
   const [Nlr, setNlr] = useState(null);
@@ -88,12 +89,17 @@ export function Nonlinearity() {
       );
     });
   };
+  // 下载文件
+  const downFile = () => {
+    btnClickExport(JSON.parse(sessionStorage.getItem("mainPage_fileData")));
+  };
 
   return (
     <Fragment>
       <div className="content4">
         {/* 左边展示具体数据表格 */}
         <div className="content-left">
+          <div className="textExplain">1111zheg这个适用于展示Non页面的数据</div>
           <div className="table-border">
             <div className="content-table">
               <div className="headerIndex">{<HeaderItem />}</div>
@@ -135,6 +141,11 @@ export function Nonlinearity() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="download">
+            <Button className="download-btn" onClick={downFile}>
+              Download
+            </Button>
           </div>
         </div>
       </div>

@@ -43,7 +43,7 @@ export default function FindPassword() {
   };
 
   if (status) {
-    return <Navigate to="/MainPage/Show" />;
+    return <Navigate to="/Login" />;
   }
 
   return (
@@ -151,7 +151,6 @@ export default function FindPassword() {
               </div>
             </div>
           </div>
-
           {/* 注册按钮 */}
           <div className="center-item">
             <div className="cnt-item-center">
@@ -163,10 +162,9 @@ export default function FindPassword() {
               </div>
             </div>
           </div>
-
           {/* 版权信息 */}
           <div className="center-item">
-            <span style={{ fontSize: "16px" }}>
+            <span style={{ fontSize: "15px", paddingBottom:"15px" }}>
               Copyright &copy; {new Date().getFullYear()} MISLab 版权所有
             </span>
           </div>

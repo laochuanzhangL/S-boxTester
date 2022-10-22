@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { Navigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import {
   UserOutlined,
@@ -10,22 +11,26 @@ import httpUtill from "../../../utils/httpUtil";
 
 export const Register = () => {
   const [loading, setLoading] = useState(false);
+  const [logFlag, setLogFlag] = useState(false);
   const emailRef = useRef();
   // 按下登录按键之后
   const onFinish = (values) => {
     setLoading(true);
     delete values.rePassword;
-    console.log(values);
-    // httpUtill.register(values).then((res) => {
-    //   console.log(res);
-    //   if (res.code === "0068000005") {
-    //     message.error("The verification code does not exist or has expired !");
-    //   } else if (res.code === "200") {
-    //     message.success("register Successfully Go and log in ~");
-    //   } else {
-    //     message.error("There sames have something wrong with your message ~");
-    //   }
-    // });
+    httpUtill.register(values).then((res) => {
+      // console.log(res);
+      if (res.code === "0000000009") {
+        message.error("The verification code does not exist or has expired !");
+      } else if (res.code === "200") {
+        message.success("register Successfully ~ Go and log in ~");
+        setLogFlag(true);
+      } else {
+        message.error(
+          "There sames have something wrong with your register data ~"
+        );
+      }
+      setLoading(false);
+    });
   };
 
   // 获取注册验证码
@@ -37,7 +42,6 @@ export const Register = () => {
     }
     // console.log(email);
     httpUtill.getServerCodeREG(email).then((res) => {
-      console.log(res);
       if (res.data === true) {
         message.success("Send successfully !");
         return;
@@ -47,6 +51,10 @@ export const Register = () => {
       }
     });
   };
+
+  if (logFlag) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Form
@@ -98,6 +106,17 @@ export const Register = () => {
             required: true,
             message: "Please your email address!",
           },
+          () => ({
+            validator(_, value) {
+              const reg = new RegExp("\\w+@\\w+(\\.\\w{2,3})*\\.\\w{2,3}");
+              if (!value || reg.test(value)) {
+                return Promise.resolve();
+              }
+              return Promise.reject(
+                new Error("Email address is illegal !")
+              );
+            },
+          }),
         ]}
       >
         <Input
@@ -133,14 +152,22 @@ export const Register = () => {
           },
           () => ({
             validator(_, value) {
-              const reg =  ""
-              if (true ) {
-                console.log(value);
-                console.log(reg.test(value));
+              const Chinese = new RegExp(
+                "/[\\u4E00-\\u9FA5]|[\\uFE30-\\uFFA0]/g"
+              );
+              const reg = new RegExp(
+                "(?!.*[\\u4E00-\\u9FA5\\s])(?!^[a-zA-Z]+$)(?!^[\\d]+$)(?!^[^a-zA-Z\\d]+$)^.{6,20}$"
+              );
+              if (!value || reg.test(value)) {
                 return Promise.resolve();
               }
+              if (Chinese.test(value) || /\s/g.test(value)) {
+                return Promise.reject(
+                  new Error("Cannot contain Cinese characters and spaces !")
+                );
+              }
               return Promise.reject(
-                new Error("The two passwords you entered do not match!")
+                new Error("Your password strength is too weak.")
               );
             },
           }),
@@ -228,7 +255,7 @@ export const Register = () => {
           type="primary"
           htmlType="submit"
           style={{ width: "100%", marginTop: 10 }}
-          // loading={loading}
+          loading={loading}
         >
           Register
         </Button>

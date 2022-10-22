@@ -8,15 +8,15 @@ import calDefaultData from "../../../../static/calRes.json";
 
 export function Dp() {
   const [dpStatus, setDpStatus] = useState(false);
-  const DefArray = calDefaultData['Dp']
+  const DefArray = calDefaultData["Dp"];
   const dp = JSON.parse(sessionStorage.getItem("mainPage_fileData")).dp;
   const index = calDefaultData["DpIndex"];
   // 计算的一些结果数据
   let MaxVal = 0;
 
   useEffect(() => {
-    if(!dp){
-      setDpStatus(true)
+    if (!dp) {
+      setDpStatus(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,6 +95,7 @@ export function Dp() {
       <div className="content2">
         {/* 左边展示具体数据表格 */}
         <div className="content-left">
+          <div className="textExplain">1111zheg这个适用于展示Bic页面的数据</div>
           <div className="content-table">
             <div className="table-header">
               <HeadItem />

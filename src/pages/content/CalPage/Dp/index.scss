@@ -16,6 +16,7 @@
   width: 100%;
   height: 78%;
   @include flexBox(flex-start, center);
+
   // 左边表格
   .content-left {
     width: 80%;
@@ -23,11 +24,29 @@
     background-color: rgb(255, 255, 255);
     border-right: 1px solid rgba(217, 217, 217, 0.4);
     @include flexBox(center, center);
+    flex-direction: column;
+    // 文字说明样式
+    .textExplain {
+      width: 90%;
+      min-height: 15%;
+      border-radius: 4px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-family: "Microsoft JhengHei";
+      color: rgb(22, 122, 149);
+      background-color: rgb(252, 252, 252);
+      border: 1px solid rgb(226, 226, 226);
+    }
+    .textExplain::selection {
+      color: black;
+      background-color: rgb(91, 202, 232);
+    }
     // 主体表格样式
     .content-table {
       width: 90%;
-      height: 80%;
-      border: 1px solid rgba(246, 246, 246, 0.8);
+      height: 75%;
+      margin-top: 20px;
+      border: 1px solid rgb(235, 235, 235);
       @include flexBox();
       flex-direction: column;
       // 表格头部一行标签

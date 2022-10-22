@@ -7,7 +7,9 @@ import "./index.scss";
 import calDefaultData from "../../../../static/calRes.json";
 
 export function SOB() {
-  const SOB = JSON.parse(sessionStorage.getItem("mainPage_fileData")).sac_OF_BIC;
+  const SOB = JSON.parse(
+    sessionStorage.getItem("mainPage_fileData")
+  ).sac_OF_BIC;
   const [SOBStatus, setSobStatus] = useState(false);
   const index = calDefaultData["B&SIndex"];
   // 计算的一些结果数据
@@ -52,7 +54,7 @@ export function SOB() {
         Var = Var + Math.pow(val - AvgVal, 2);
       });
       Var = Var / 55;
-      Var = Math.sqrt(Var)
+      Var = Math.sqrt(Var);
       MinVal = MinVal.toFixed(6);
       AvgVal = AvgVal.toFixed(6);
       Var = Var.toFixed(6);
@@ -115,6 +117,7 @@ export function SOB() {
       <div className="content6">
         {/* 左边展示具体数据表格 */}
         <div className="content-left">
+          <div className="textExplain">1111zheg这个适用于展示SOB页面的数据</div>
           <div className="table-border">
             <div className="content-table">
               <div className="headerIndex">{<HeaderItem />}</div>

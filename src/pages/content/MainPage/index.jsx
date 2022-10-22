@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Divider, Button, Upload, message, Popconfirm } from "antd";
+import { Divider, Button, Upload, message } from "antd";
 import { StarOutlined, UploadOutlined } from "@ant-design/icons";
 import cookies from "react-cookies";
 
@@ -35,62 +35,31 @@ export default function UploadAndShow() {
       if (file.status !== "uploading") {
         message.success("success to add your file");
         setFile(file.originFileObj);
+        const formdata = new FormData();
+        formdata.append("file", file.originFileObj);
+        httpUtill.getFileArray(formdata).then((res) => {
+          setResArray(res.data);
+          // 用于更改上传计算次数
+          httpUtill.getRegisterStatus().then((res) => {
+            if (res.data) {
+              setTime(res.data.times);
+            }
+          });
+          const data = res.data;
+          message.loading(
+            "Start to get the calculate result, please wait a minute ~"
+          );
+          // 获取单次计算结果
+          httpUtill.getSingleRes({ data: data }).then((res) => {
+            const data = JSON.stringify(res.data);
+            sessionStorage.setItem("mainPage_fileData", data);
+            setFileData(res.data);
+            message.success("Successfully to get the calculate result ~");
+          });
+          setFile(null);
+        });
       }
-      const formdata = new FormData();
-    formdata.append("file", File);
-      httpUtill.getFileArray(formdata).then((res) => {
-        setResArray(res.data);
-        // 用于更改上传计算次数
-        httpUtill.getRegisterStatus().then((res) => {
-          if (res.data) {
-            setTime(res.data.times);
-          }
-        });
-        const data = res.data;
-        message.loading("Start to get the calculate result, please wait a minute ~");
-        // 获取单次计算结果
-        httpUtill.getSingleRes({ data: data }).then((res) => {
-          const data = JSON.stringify(res.data)
-          sessionStorage.setItem("mainPage_fileData", data);
-          setFileData(res.data);
-          message.success("Successfully to get the calculate result ~");
-        });
-        setFile(null);
-      });
     },
-  };
-  // 用于上传文件
-  const uploadFile = () => {
-    if (!File) {
-      message.warn("Please upload your file first !");
-      return;
-    }
-    message.warn("Start to get the array of data and calculate result~");
-    const formdata = new FormData();
-    formdata.append("file", File);
-    httpUtill.getFileArray(formdata).then((res) => {
-      setResArray(res.data);
-      // 用于更改上传计算次数
-      httpUtill.getRegisterStatus().then((res) => {
-        if (res.data) {
-          setTime(res.data.times);
-        }
-      });
-      const data = res.data;
-      message.loading("Start to get the calculate result, please wait a minute ~");
-      // 获取单次计算结果
-      httpUtill.getSingleRes({ data: data }).then((res) => {
-        const data = JSON.stringify(res.data)
-        sessionStorage.setItem("mainPage_fileData", data);
-        setFileData(res.data);
-        message.success("Successfully to get the calculate result ~");
-      });
-      setFile(null);
-    });
-  };
-  // 用于取消上传文件
-  const cancelUpload = () => {
-    setFile(null);
   };
 
   // 用于单次计算按钮
@@ -165,7 +134,7 @@ export default function UploadAndShow() {
                 )}
               </Upload>
               <div className="scan-import2">
-                <Popconfirm
+                {/* <Popconfirm
                   placement="bottom"
                   id="upload"
                   title={
@@ -179,15 +148,12 @@ export default function UploadAndShow() {
                   <Button className="cle-left-btn" type="primary">
                     Confirm
                   </Button>
-                </Popconfirm>
+                </Popconfirm> */}
               </div>
             </div>
             <div className="cle-right">
               {fileData ? (
-                <Link
-                  to="/CalPage/Bic"
-                  className="scan-import3"
-                >
+                <Link to="/CalPage/Nlr" className="scan-import3">
                   <Button type="primary" className="btn" onClick={Calculate}>
                     Get the result of this file
                   </Button>

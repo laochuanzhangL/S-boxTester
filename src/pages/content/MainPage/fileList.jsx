@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { List, Button, Popconfirm, message } from "antd";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-// import cookies from "react-cookies";
 
 import httpUtill from "../../../utils/httpUtil";
 
@@ -10,24 +9,39 @@ export default function FileList(props) {
   const setResarray = props.setResArray;
   const [totalPage, setTotalPage] = useState(5);
   const [fileData, setFileData] = useState(null);
+  // 获取缓存在本地的文件列表数据
+  // const [localRecords, setLocalRecords] = useState(
+  //   JSON.parse(localStorage.getItem("fileList_records"))
+  // );
   const time = props.time;
 
   // 用于获取文件列表第一页
   useEffect(() => {
+    // console.log(localStorage.getItem("fileList_records"));
+    // console.log(localRecords);
     httpUtill.getFileList(1, 5).then((res) => {
       setTotalPage(res.data.total);
+      // 将获取到的数据缓存到本地
+      // const records = JSON.stringify(res.data.records);
+      // localStorage.setItem("fileList_records", [...records]);
       setFileData(res.data.records);
     });
   }, []);
 
   // 获取指定页的文件
   const getCertentPage = (id) => {
+    console.log(localStorage.getItem("fileList_records"));
     message.loading(
       "Loading started! The data is large, please wait a minute ~"
     );
-    setFileData(null);
     httpUtill.getFileList(id, 5).then((res) => {
       setTotalPage(res.data.total);
+      // const records = JSON.stringify(res.data.records);
+      // // 添加进本地的数据
+      // localStorage.setItem("fileList_records", [
+      //   ...localStorage.getItem("fileList_records"),
+      //   ...records,
+      // ]);
       setFileData(res.data.records);
     });
   };
@@ -95,7 +109,7 @@ export default function FileList(props) {
                   </Button>
                 </div>
                 <div className="showRes">
-                  <Link to="/CalPage">
+                  <Link to="/CalPage/Nlr">
                     <Button type="text" onClick={sendFileData.bind(null, item)}>
                       calculate
                     </Button>
